@@ -1,10 +1,10 @@
 
 import sys
-from stages.stage1_ocean import find_lookalike_companies
-from stages.stage2_prospeo import find_decision_makers
-from stages.stage3_eazyreach import resolve_emails
-from stages.stage4_brevo import send_outreach_emails
-from stages.stage4_brevo import send_outreach_emails, build_email_subject, build_email_body
+from stages.stage1 import find_lookalike_companies
+from stages.stage2 import find_decision_makers
+from stages.stage3 import resolve_emails
+from stages.stage4 import send_outreach_emails
+from stages.stage4 import send_outreach_emails, build_email_subject, build_email_body
 
 
 def print_banner(stage_number: int, title: str):

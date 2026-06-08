@@ -3,16 +3,6 @@ Stage 3 — Resolve Verified Work Emails (Prospeo /enrich-person)
 
 Input  : list of contacts with LinkedIn URLs from Stage 2
 Output : same contacts, now with a verified work email added
-
-Prospeo docs : https://prospeo.io/api-docs/enrich-person
-Auth         : X-KEY header
-Endpoint     : POST https://api.prospeo.io/enrich-person
-
-Why a separate stage?
-    /search-person (Stage 2) finds WHO the person is.
-    /enrich-person (Stage 3) reveals their verified email.
-    Prospeo charges credits only for enrichment, not for search —
-    so this two-step approach is both correct and cost-efficient.
 """
 
 import os
@@ -29,16 +19,6 @@ RATE_LIMIT_DELAY_SECONDS = 0.5
 
 
 def resolve_emails(contacts: list[dict]) -> list[dict]:
-    """
-    Takes a list of contact dicts (each must have 'linkedin_url').
-    Calls Prospeo /enrich-person for each one to get a verified email.
-
-    Returns only the contacts where a verified email was found.
-    Contacts with no email are dropped — we only mail real addresses.
-
-    Each returned dict is the original contact dict plus:
-        - email : str  (verified work email)
-    """
     if not PROSPEO_API_KEY:
         raise EnvironmentError("PROSPEO_API_KEY is not set in your .env file.")
 

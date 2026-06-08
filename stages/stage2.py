@@ -3,13 +3,6 @@ Stage 2 — Find Decision-Makers (Prospeo /search-person)
 
 Input  : list of company domains from Stage 1
 Output : list of C-suite / VP contacts with LinkedIn URLs
-
-Prospeo docs : https://prospeo.io/api-docs/search-person
-Auth         : X-KEY header
-Endpoint     : POST https://api.prospeo.io/search-person
-
-NOTE: /search-person returns profile data but does NOT include emails.
-      Emails are resolved separately in Stage 3 via /enrich-person.
 """
 
 import os
@@ -27,21 +20,6 @@ RATE_LIMIT_DELAY_SECONDS = 0.5
 
 
 def find_decision_makers(companies: list[dict]) -> list[dict]:
-    """
-    Takes a list of company dicts (each with 'domain' and 'name').
-    Returns a flat list of C-suite / VP contacts with LinkedIn URLs.
-
-    Each returned dict has:
-        - domain        : str  (e.g. "acme.com")
-        - company_name  : str
-        - first_name    : str
-        - last_name     : str
-        - full_name     : str
-        - title         : str
-        - linkedin_url  : str  (needed by Stage 3 to resolve the email)
-
-    Companies with no contacts found are skipped — not a crash.
-    """
     if not PROSPEO_API_KEY:
         raise EnvironmentError("PROSPEO_API_KEY is not set in your .env file.")
 
